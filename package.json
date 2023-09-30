@@ -1,0 +1,19 @@
+{
+  "name": "node.js-learning-course",
+  "version": "1.0.0",
+  "description": "Node.js_Course_Practice",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sytnikovakatya/node.js-learning-course.git"
+  },
+  "author": "Kateryna Sytnikova <katerinafarina400@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sytnikovakatya/node.js-learning-course/issues"
+  },
+  "homepage": "https://github.com/Sytnikovakatya/node.js-learning-course#readme"
+}
