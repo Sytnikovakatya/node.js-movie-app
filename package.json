@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Sytnikovakatya/node.js-learning-course/issues"
   },
-  "homepage": "https://github.com/Sytnikovakatya/node.js-learning-course#readme"
+  "homepage": "https://github.com/Sytnikovakatya/node.js-learning-course#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
