@@ -12,7 +12,7 @@ app.get('/about', (req, res) => {
   res.json({ message: 'This is About Page' });
 });
 
-app.use('/healthcheck', require('./routes/healthchecker'));
+app.use('/health-check', require('./routes/healthchecker'));
 
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(specs));
 

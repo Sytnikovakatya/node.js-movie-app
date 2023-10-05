@@ -40,7 +40,7 @@ const options = {
       }
     ],
     paths: {
-      '/healthcheck': {
+      '/health-check': {
         get: getHealthCheck
       },
       '/about': {
