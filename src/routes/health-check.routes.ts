@@ -1,6 +1,6 @@
 import { Router, Request, Response, NextFunction } from 'express';
 
-import { HealthCheck } from '../models/health-check.models';
+import { HealthCheck } from '../interfaces/health-check.interface';
 
 const healthCheck: Router = Router();
 
