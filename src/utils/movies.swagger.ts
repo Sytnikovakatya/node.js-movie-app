@@ -28,7 +28,7 @@ export const geMoviesByGenre = {
     }
   ],
   responses: {
-    204: {
+    200: {
       description: 'Successfully retrieved movies',
     },
     400: {

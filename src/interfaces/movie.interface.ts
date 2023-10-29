@@ -2,6 +2,6 @@ export interface IMovie {
   _id?: number;
   title: string;
   description: string;
-  releaseDate?: Date;
+  releaseDate: Date;
   genre: string[];
 }
