@@ -1,15 +1,16 @@
 import { NextFunction, Request, Response } from 'express';
 
-import MovieModel from '../models/movies';
-import GenreModel from '../models/genre';
+import * as movieService from "../service/movie.service";
+import * as genreService from "../service/genre.service";
 
 import { IMovie } from '../interfaces/movie.interface';
 import { IGenre } from '../interfaces/genre.interface';
 
 
+
 export const getAllMovies = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const movies: IMovie[] = await MovieModel.find();
+        const movies: IMovie[] = await movieService.getMovies();
         res.json(movies);
     } catch(err) {
         next(err);
@@ -18,7 +19,7 @@ export const getAllMovies = async (req: Request, res: Response, next: NextFuncti
 
 export const createMovie = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const newMovie: IMovie = await MovieModel.create(req.body);
+        const newMovie = await movieService.createMovie(req.body);
         res.status(201).json(newMovie);
     } catch (err) {
         next(err);
@@ -28,7 +29,7 @@ export const createMovie = async (req: Request, res: Response, next: NextFunctio
 export const updateMovie = async (req: Request, res: Response, next: NextFunction) => { 
    try {
         const id: string = req.params.id;
-        const updatedMovie: IMovie|null = await MovieModel.findByIdAndUpdate(id, req.body, { new: true });
+        const updatedMovie: IMovie|null = await movieService.updateMovie(id, req.body);
         if (!updatedMovie) {
             return res.status(404).json({ message: 'Movie not found' });
         }
@@ -40,7 +41,7 @@ export const updateMovie = async (req: Request, res: Response, next: NextFunctio
 
 export const deleteMovie = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        await MovieModel.findByIdAndDelete(req.params.id);
+        await movieService.removeMovie(req.params.id);
         res.json({ message: 'Movie deleted' });
     } catch (err) {
         next(err);
@@ -49,12 +50,12 @@ export const deleteMovie = async (req: Request, res: Response, next: NextFunctio
 
 export const getMoviesByGenre = async (req: Request, res: Response) => {
   const genreName = req.params.genreName;
-  const genre: IGenre | null = await GenreModel.findOne({ name: genreName });
+  const genre: IGenre | null = await genreService.getGenreByName(genreName);
  
-  if (!genre) {
+  if (!genre?._id) {
     return res.status(400).json({ message: `Genre '${genreName}' not found.` });
   }
-  const movies: IMovie[] = await MovieModel.find({ genre: genre._id });
+  const movies: IMovie[] = await movieService.getMoviesByGenre(genre._id);
   if (!movies.length) {
     return res.sendStatus(204);
   }

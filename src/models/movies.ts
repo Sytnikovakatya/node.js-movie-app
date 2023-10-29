@@ -1,5 +1,10 @@
 import mongoose, {  Schema } from 'mongoose';
+
+import { HydratedDocument } from "mongoose";
+
 import { IMovie } from '../interfaces/movie.interface';
+
+export type MovieDocument = HydratedDocument<IMovie>;
 
 const movieSchema: Schema = new Schema({
   title: {

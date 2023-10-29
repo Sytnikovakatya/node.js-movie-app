@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
 
-import GenreModel from '../models/genre';
+import * as genreService from "../service/genre.service";
 
 import { IGenre } from '../interfaces/genre.interface';
 
 export const getAllGenres = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const genres: IGenre[] = await GenreModel.find();
+        const genres: IGenre[] = await genreService.getGenres();
         res.json(genres);
     } catch(err) {
         next(err);
@@ -15,7 +15,7 @@ export const getAllGenres = async (req: Request, res: Response, next: NextFuncti
 
 export const createGenre =  async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const newGenre: IGenre = await GenreModel.create(req.body);
+        const newGenre: IGenre = await genreService.createGenre(req.body);
         res.status(201).json(newGenre);
     } catch (err) {
         next(err);
@@ -25,7 +25,7 @@ export const createGenre =  async (req: Request, res: Response, next: NextFuncti
 export const updateGenre = async (req: Request, res: Response, next: NextFunction) => { 
    try {
         const id: string = req.params.id;
-        const updatedGenre: IGenre|null = await GenreModel.findByIdAndUpdate(id, req.body, { new: true });
+        const updatedGenre: IGenre|null = await genreService.updateGenre(id, req.body);
         if (!updatedGenre) {
             return res.status(404).json({ message: 'Genre not found' });
         }
@@ -37,7 +37,7 @@ export const updateGenre = async (req: Request, res: Response, next: NextFunctio
 
 export const deleteGenre = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        await GenreModel.findByIdAndDelete(req.params.id);
+        await genreService.removeGenre(req.params.id);
         res.json({ message: 'Genre deleted' });
     } catch (err) {
         next(err);
