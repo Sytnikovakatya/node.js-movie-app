@@ -2,7 +2,9 @@ import express, { Request, Response } from 'express';
 
 import swaggerUi from 'swagger-ui-express';
 
-import mongoose from 'mongoose';
+import mongoose, { ConnectOptions } from 'mongoose';
+
+import dotenv from "dotenv";
 
 import swaggerSpec  from './utils/swagger';
 
@@ -10,14 +12,18 @@ import { errorHandler } from './middleware/errorHandler';
 
 import healthCheck from './routes/health-check.routes';
 import moviesRouter from './routes/movie.routes';
-import genresRouter from './routes/genre.routes'
+import genresRouter from './routes/genre.routes';
+
+dotenv.config();
 
 const app = express();
 const PORT = 3000;
 
-const db = 'mongodb+srv://katerynasytnikova:Pass123@cluster0.wooingr.mongodb.net/node-course';
-
-mongoose.connect(db)
+const db = process.env.DATABASE_URL || '';
+mongoose.connect(db, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+} as ConnectOptions)
 .then(() => console.log('Connected to DB'))
 .catch((error) => console.log(error));
 
