@@ -53,7 +53,7 @@ export const getMoviesByGenre = async (req: Request, res: Response) => {
   const genre: IGenre | null = await genreService.getGenreByName(genreName);
  
   if (!genre?._id) {
-    return res.status(400).json({ message: `Genre '${genreName}' not found.` });
+    return res.status(404).json({ message: `Genre '${genreName}' not found.` });
   }
   const movies: IMovie[] = await movieService.getMoviesByGenre(genre._id);
   if (!movies.length) {
