@@ -3,7 +3,7 @@ import GenreModel from '../models/genre';
 import  { IMovie } from '../interfaces/movie.interface';
 
 export const getMovies = async (): Promise<MovieDocument[]> => {
-  return MovieModel.find().populate("genre", { _id: 1, name: 1 }, GenreModel);
+  return MovieModel.find().populate("genre", {}, GenreModel);
 };
 
 
@@ -25,15 +25,12 @@ export const updateMovie = async (
   return MovieModel.findOneAndUpdate({ _id: id }, data, {
     new: true,
     runValidators: true
-  }).populate("genre", { _id: 1, name: 1 }, GenreModel);
+  }).populate("genre", {}, GenreModel);
 };
 
 export const getMoviesByGenre = async (
   id: number
 ): Promise<MovieDocument[]> => {
-  return MovieModel.find({ genre: id}).populate(
-    "genre",
-    { _id: 1, name: 1 },
-    GenreModel
-  );
+  return MovieModel.find({ genre: id})
+   .populate("genre", {}, GenreModel);
 };
