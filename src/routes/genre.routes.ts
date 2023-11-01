@@ -5,8 +5,8 @@ import * as genreValidationRules from '../middleware/genreValidationRules';
 const router = Router();
 
 router.get('/', genreControllers.getAllGenres);
-router.post('/', genreControllers.createGenre, genreValidationRules.genreCreateRules);
-router.patch('/:id', genreControllers.updateGenre, genreValidationRules.genreUpdateRules);
-router.delete('/:id', genreControllers.deleteGenre, genreValidationRules.genreDeleteRules);
+router.post('/', genreValidationRules.genreCreateRules, genreControllers.createGenre);
+router.patch('/:id', genreValidationRules.genreUpdateRules, genreControllers.updateGenre);
+router.delete('/:id',  genreValidationRules.genreDeleteRules,  genreControllers.deleteGenre);
 
 export default router;
