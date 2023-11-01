@@ -5,9 +5,9 @@ import * as movieValidationRules from '../middleware/movieValidationRules';
 const router = Router();
 
 router.get('/', movieControllers.getAllMovies);
-router.post('/', movieControllers.createMovie, movieValidationRules.createRules)
-router.patch('/:id', movieControllers.updateMovie, movieValidationRules.updateRules);
-router.delete('/:id', movieControllers.deleteMovie, movieValidationRules.deleteRules);
+router.post('/', movieValidationRules.createRules, movieControllers.createMovie)
+router.patch('/:id', movieValidationRules.updateRules, movieControllers.updateMovie);
+router.delete('/:id', movieValidationRules.deleteRules, movieControllers.deleteMovie);
 router.get('/genre/:genreName', movieControllers.getMoviesByGenre);
 
 export default router;
