@@ -1,5 +1,8 @@
 import swaggerJsdoc from 'swagger-jsdoc';
 
+import * as movies from '../utils/movies.swagger'
+import * as genres from '../utils/genres.swagger'
+
 const getHealthCheck = {
     tags: ['HealthCheck'],
     description: 'Responds if the app is up and running',
@@ -23,50 +26,15 @@ const getAbout = {
     responses: {
         200: {
             description: 'Successfully retrieved the About Page',
-            content: {
-                'application/json': {
-                    schema: {
-                        type: 'object',
-                        example: {status: 200, message: 'Success'}
-                    }
-                }
-            }
         },
         404: {
             description: 'Page not found.',
-            content: {
-                'application/json': {
-                    schema: {
-                        type: 'object',
-                        properties: {
-                            error: {
-                                type: 'object',
-                                description: 'The error message',
-                                example: {status: 404, message: 'Not found'}
-                            }
-                        }
-                    }
-                }
-            },
-            500: {
-                description: 'Internal server error.',
-                content: {
-                    'application/json': {
-                        schema: {
-                            type: 'object',
-                            properties: {
-                                error: {
-                                    type: 'object',
-                                    description: 'The error message',
-                                    example: {status: 500, message: 'Internal Server Error'}
-                                }
-                            }
-                        }
-                    }
-                }
+        },
+        500: {
+            description: 'Internal server error.',
             }
         }
-    }};
+    };
 
 const options: swaggerJsdoc.Options = {
     definition: {
@@ -87,10 +55,29 @@ const options: swaggerJsdoc.Options = {
             },
             '/about': {
                 get: getAbout
-            }
+            },
+            '/movies': {
+                get: movies.getMovies,
+                post: movies.createMovie,
+            },
+             '/movies/{id}': {
+                patch: movies.updateMovie,
+                delete: movies.deleteMovie,
+            },
+            '/movies/genre/{genreName}': {
+                get: movies.geMoviesByGenre,
+            },
+            '/genres': {
+                get: genres.getGenre,
+                post: genres.createGenre,
+            },
+            '/genres/{id}': {
+                patch: genres.updateGenre,
+                delete: genres.deleteGenre,
+            },
         }
     },
-    apis: [`index.ts`]
+    apis: [`index.ts`, `movies.ts`, `genres.ts`]
 };
 
 const swaggerSpec = swaggerJsdoc(options);
