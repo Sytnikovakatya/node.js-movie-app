@@ -22,7 +22,7 @@ const movieSchema: Schema = new Schema({
   },
   genre: {
     type: [Schema.Types.ObjectId],
-    ref: 'GenreModel',
+    ref: 'Genre',
     required: true,
   },
 });

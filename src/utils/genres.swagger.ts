@@ -91,7 +91,7 @@ export const updateGenre = {
     }
   },
   responses: {
-    201: {
+    200: {
       description: 'Genre updated successfully',
     },
     400: {
