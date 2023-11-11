@@ -82,7 +82,6 @@ describe('Genre Controllers', () => {
 
     (genreService.updateGenre as jest.Mock).mockResolvedValue(null);
 
-   
     await genreControllers.updateGenre(mockRequest, mockResponse, mockNext);
 
     expect(mockResponse.status).toHaveBeenCalledWith(404);

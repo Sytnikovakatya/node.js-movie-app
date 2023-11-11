@@ -105,7 +105,6 @@ describe('Movie Controllers', () => {
     const mockResponse = {
       json: jest.fn(),
       status: jest.fn(),
-      sendStatus: jest.fn(),
     } as unknown as Response;
 
     const mockGenre: IGenre = {
@@ -142,7 +141,6 @@ describe('Movie Controllers', () => {
     const mockResponse = {
       json: jest.fn(),
       status: jest.fn(),
-      sendStatus: jest.fn(),
     } as unknown as Response;
 
     (genreService.getGenreByName as jest.Mock).mockResolvedValue(null);
@@ -159,7 +157,6 @@ describe('Movie Controllers', () => {
     } as unknown as Request;
     const mockResponse = {
       json: jest.fn(),
-      status: jest.fn(),
       sendStatus: jest.fn(),
     } as unknown as Response;
 
