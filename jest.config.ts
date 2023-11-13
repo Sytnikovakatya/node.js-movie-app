@@ -1,6 +1,6 @@
-/* eslint-disable no-undef */
-/** @type {import('ts-jest').JestConfigWithTsJest} */
-module.exports = {
+import type { Config } from '@jest/types';
+
+const config: Config.InitialOptions = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   testMatch: ['**/**/*.test.ts'],
@@ -10,3 +10,5 @@ module.exports = {
   resetMocks: true,
   restoreMocks: true,
 };
+
+export default config;
