@@ -13,43 +13,76 @@ describe('Genre Controllers', () => {
     jest.clearAllMocks();
   });
 
-  it('should get all genres', async () => {
-    const mockRequest = {} as Request;
-    const mockResponse = {
-      json: jest.fn(),
-    } as unknown as Response;
-    const mockNext = jest.fn() as unknown as NextFunction;
+  describe('getAllGenres', () => {
+    it('should get all genres', async () => {
+        const mockRequest = {} as Request;
+        const mockResponse = {
+          json: jest.fn(),
+        } as unknown as Response;
+        const mockNext = jest.fn() as unknown as NextFunction;
 
-    const mockGenres: IGenre[] = [{ name: 'Genre 1' }, { name: 'Genre 2' }];
+        const mockGenres: IGenre[] = [{ name: 'Genre 1' }, { name: 'Genre 2' }];
 
-    (genreService.getGenres as jest.Mock).mockResolvedValue(mockGenres);
+        (genreService.getGenres as jest.Mock).mockResolvedValue(mockGenres);
 
-    await genreControllers.getAllGenres(mockRequest, mockResponse, mockNext);
+        await genreControllers.getAllGenres(mockRequest, mockResponse, mockNext);
 
-    expect(mockResponse.json).toHaveBeenCalledWith(mockGenres);
+        expect(mockResponse.json).toHaveBeenCalledWith(mockGenres);
+      });
+
+    it('should call the next function with an error', async () => {
+      const mockRequest = {} as Request;
+      const mockResponse = {} as Response;
+      const mockNext = jest.fn() as unknown as NextFunction;
+
+      const error = new Error('error');
+      (genreService.getGenres as jest.Mock).mockRejectedValue(error);
+
+      await genreControllers.getAllGenres(mockRequest, mockResponse, mockNext);
+
+      expect(mockNext).toHaveBeenCalledTimes(1);
+      expect(mockNext).toHaveBeenCalledWith(error);
+      });
   });
+  
+  describe('createGenre', () => {
+    it('should create a genre', async () => {
+        const mockRequest = {
+          body: { name: 'New Genre' },
+        } as unknown as Request;
+        const mockResponse = {
+          status: jest.fn().mockReturnThis(),
+          json: jest.fn(),
+        } as unknown as Response;
+        const mockNext = jest.fn() as unknown as NextFunction;
 
-  it('should create a genre', async () => {
-    const mockRequest = {
-      body: { name: 'New Genre' },
-    } as unknown as Request;
-    const mockResponse = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    } as unknown as Response;
-    const mockNext = jest.fn() as unknown as NextFunction;
+        const mockNewGenre: IGenre = { name: 'New Genre' };
 
-    const mockNewGenre: IGenre = { name: 'New Genre' };
+        (genreService.createGenre as jest.Mock).mockResolvedValue(mockNewGenre);
 
-    (genreService.createGenre as jest.Mock).mockResolvedValue(mockNewGenre);
+        await genreControllers.createGenre(mockRequest, mockResponse, mockNext);
 
-    await genreControllers.createGenre(mockRequest, mockResponse, mockNext);
+        expect(mockResponse.status).toHaveBeenCalledWith(201);
+        expect(mockResponse.json).toHaveBeenCalledWith(mockNewGenre);
+      });
+     
+    it('should call the next function with an error', async () => {
+      const mockRequest = {} as Request;
+      const mockResponse = {} as Response;
+      const mockNext = jest.fn() as unknown as NextFunction;
 
-    expect(mockResponse.status).toHaveBeenCalledWith(201);
-    expect(mockResponse.json).toHaveBeenCalledWith(mockNewGenre);
+      const error = new Error('error');
+      (genreService.createGenre as jest.Mock).mockRejectedValue(error);
+
+      await genreControllers.createGenre(mockRequest, mockResponse, mockNext);
+
+      expect(mockNext).toHaveBeenCalledTimes(1);
+      expect(mockNext).toHaveBeenCalledWith(error);
+    });  
   });
+  
 
-  describe('getMoviesByGenre', () => {
+  describe('updateGenre', () => {
     it('should update a genre', async () => {
       const mockRequest = {
         params: { id: 'genreId' },
@@ -87,21 +120,56 @@ describe('Genre Controllers', () => {
     expect(mockResponse.status).toHaveBeenCalledWith(404);
     expect(mockResponse.json).toHaveBeenCalledWith({ message: 'Genre not found' });
   });
-})
 
-  it('should delete a genre', async () => {
+  it('should call the next function with an error', async () => {
     const mockRequest = {
-      params: { id: 'genreId' },
+      params: { id: 'unknownId' },
+      body: { name: 'Updated Genre' },
     } as unknown as Request;
-    const mockResponse = {
-      json: jest.fn(),
-    } as unknown as Response;
+    const mockResponse = {} as Response;
     const mockNext = jest.fn() as unknown as NextFunction;
 
-    (genreService.removeGenre as jest.Mock).mockResolvedValue(null);
+    const error = new Error('error');
+    (genreService.updateGenre as jest.Mock).mockRejectedValue(error);
 
-    await genreControllers.deleteGenre(mockRequest, mockResponse, mockNext);
+    await genreControllers.updateGenre(mockRequest, mockResponse, mockNext);
 
-    expect(mockResponse.json).toHaveBeenCalledWith({ message: 'Genre deleted' });
-  });
+    expect(mockNext).toHaveBeenCalledTimes(1);
+    expect(mockNext).toHaveBeenCalledWith(error);
+  });  
+})
+
+describe('deleteGenre', () => {
+  it('should delete a genre', async () => {
+      const mockRequest = {
+        params: { id: 'genreId' },
+      } as unknown as Request;
+      const mockResponse = {
+        json: jest.fn(),
+      } as unknown as Response;
+      const mockNext = jest.fn() as unknown as NextFunction;
+
+      (genreService.removeGenre as jest.Mock).mockResolvedValue(null);
+
+      await genreControllers.deleteGenre(mockRequest, mockResponse, mockNext);
+
+      expect(mockResponse.json).toHaveBeenCalledWith({ message: 'Genre deleted' });
+    });
+ 
+  it('should call the next function with an error', async () => {
+      const mockRequest = {
+        params: { id: 'genreId' },
+      } as unknown as Request;
+      const mockResponse = {} as Response;
+      const mockNext = jest.fn() as unknown as NextFunction;
+
+      const error = new Error('error');
+      (genreService.removeGenre as jest.Mock).mockRejectedValue(error);
+
+      await genreControllers.deleteGenre(mockRequest, mockResponse, mockNext);
+
+      expect(mockNext).toHaveBeenCalledTimes(1);
+      expect(mockNext).toHaveBeenCalledWith(error);
+    });  
+ });
 });
