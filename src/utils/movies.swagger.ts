@@ -31,8 +31,14 @@ export const geMoviesByGenre = {
     200: {
       description: 'Successfully retrieved movies',
     },
+    204: {
+      description: 'Movie not found',
+    },
     400: {
       description: 'Bad request',
+    },
+    404: {
+      description: 'Genre not found',
     },
     500: {
       description: 'Internal server error',
@@ -125,7 +131,7 @@ export const updateMovie = {
     }
   },
   responses: {
-    201: {
+    200: {
       description: 'Movie updated successfully',
     },
     400: {

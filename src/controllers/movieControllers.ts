@@ -59,7 +59,7 @@ export const getMoviesByGenre = async (req: Request, res: Response) => {
   if (!movies.length) {
     return res.sendStatus(204);
   }
-  res.status(200).json({
+  res.json({
     status: 'success',
       count: movies.length,
       data: {

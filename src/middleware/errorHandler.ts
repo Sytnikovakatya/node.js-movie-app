@@ -6,7 +6,6 @@ export const errorHandler = (error: Error, req: Request, res: Response, next: Ne
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-  console.error(error);
   res.status(500).json({ error: 'Internal Server Error' });
 
   next();
