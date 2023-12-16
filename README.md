@@ -10,12 +10,14 @@ Run commands
 npm install
 npm start
 
+```
 # Running unit tests and Code Coverage Functionality
 Run command
 
 ```
 npm run test 
 
+```
 to execute the unit tests via jest which will run the project's unit tests with Jest and produce documentation that gives guidance on how well the project's tests cover the code. 
 
 The documentation is created inside the /coverage folder (ignored by git).
