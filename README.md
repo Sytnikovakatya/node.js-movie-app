@@ -1,4 +1,4 @@
-# node.js-learning-course
+# node.js-movie-app
 The Node.js project API is build with basic CRUD functionalities, using the Express.js framework and the MongoDB database, with Swagger documentation and TypeScript safety. It runs using Nodemon.
 
 The Mongoose library is used to connect the application to the MongoDB database.
